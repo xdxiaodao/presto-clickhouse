@@ -6,6 +6,7 @@ import com.facebook.presto.plugin.jdbc.DriverConnectionFactory;
 import com.facebook.presto.plugin.jdbc.JdbcColumnHandle;
 import com.facebook.presto.plugin.jdbc.JdbcConnectorId;
 import com.facebook.presto.plugin.jdbc.JdbcSplit;
+import com.facebook.presto.spi.ConnectorSession;
 import com.google.common.base.Joiner;
 import com.facebook.airlift.log.Logger;
 import ru.yandex.clickhouse.ClickHouseDriver;
@@ -31,8 +32,7 @@ public class ClickhouseClient
     }
 
     @Override
-    public PreparedStatement buildSql(Connection connection, JdbcSplit split, List<JdbcColumnHandle> columnHandles)
-            throws SQLException
+    public PreparedStatement buildSql(ConnectorSession session, Connection connection, JdbcSplit split, List<JdbcColumnHandle> columnHandles) throws SQLException
     {
         return new ClickhouseQueryBuilder(identifierQuote).buildSql(
                 this,
